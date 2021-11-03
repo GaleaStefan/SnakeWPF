@@ -1,0 +1,25 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SnakeWPF.SnakeGame"
+             d:DataContext="{d:DesignInstance Type=local:SnakeStartViewModel}" x:Class="SnakeWPF.SnakeGame.SnakeStartView"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" TextAlignment="Center"><Run Text="Snake Game made with WPF MVVM"/></TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Margin="5">Choose grid size</TextBlock>
+            <Button Command="{Binding DecreaseGridCommand}">&lt;</Button>
+            <TextBlock TextAlignment="Center" Margin="5" Text="{Binding GridSize, Mode=OneWay}"/>
+            <Button Command="{Binding IncreaseGridCommand}">></Button>
+        </StackPanel>
+        <Button Command="{Binding StartCommand}" Grid.Row="2" Margin="30,30,30,30" Content="Start" Grid.ColumnSpan="3"/>
+    </Grid>
+</UserControl>

@@ -5,23 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SnakeWPF.SnakeGame"
              xmlns:converter="clr-namespace:SnakeWPF.Converters"
+             xmlns:snake="clr-namespace:Snake.Logic;assembly=Snake.Logic"
              d:DataContext="{d:DesignInstance Type=local:SnakeGameViewModel}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
-             xmlns:i="http://schemas.microsoft.com/xaml/behaviors">
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             x:Name="GameWindow"
+             Focusable="True"
+             local:FocusExtension.IsFocused = "{Binding Game.GameIsRunning}">
     <UserControl.Resources>
         <converter:DimensionFromScreenAndGridSizeConverter x:Key="dimensionConverter"/>
         <converter:GridPositionToScreenOffsetConverter x:Key="offsetConverter"/>
     </UserControl.Resources>
-    
+
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding ControlLoadedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
-    
-    <Canvas Background="WhiteSmoke" Name="GameBoard">
-        <Ellipse Fill="Red">
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="W" Command="{Binding DirectionChangeCommand}" CommandParameter="{x:Static snake:MoveDirection.UP}"/>
+        <KeyBinding Key="S" Command="{Binding DirectionChangeCommand}" CommandParameter="{x:Static snake:MoveDirection.DOWN}"/>
+        <KeyBinding Key="A" Command="{Binding DirectionChangeCommand}" CommandParameter="{x:Static snake:MoveDirection.LEFT}"/>
+        <KeyBinding Key="D" Command="{Binding DirectionChangeCommand}" CommandParameter="{x:Static snake:MoveDirection.RIGHT}"/>
+    </UserControl.InputBindings>
+
+    <Canvas Background="WhiteSmoke" Name="GameBoard" Width="300" Height="300">
+       <Ellipse Fill="Red">
             <Ellipse.Width>
                 <MultiBinding Converter="{StaticResource dimensionConverter}">
                     <Binding ElementName="GameBoard" Path="ActualWidth"/>
@@ -55,7 +66,86 @@
                 </TranslateTransform>
             </Ellipse.RenderTransform>
         </Ellipse>
-        
-        
+
+        <Rectangle Fill="LightGreen">
+            <Rectangle.Width>
+                <MultiBinding Converter="{StaticResource dimensionConverter}">
+                    <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                    <Binding Path="GridSize"/>
+                </MultiBinding>
+            </Rectangle.Width>
+
+            <Rectangle.Height>
+                <MultiBinding Converter="{StaticResource dimensionConverter}">
+                    <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                    <Binding Path="GridSize"/>
+                </MultiBinding>
+            </Rectangle.Height>
+
+            <Rectangle.RenderTransform>
+                <TranslateTransform>
+                    <TranslateTransform.X>
+                        <MultiBinding Converter="{StaticResource offsetConverter}">
+                            <Binding Path="Game.Snake.Head.Position.X"/>
+                            <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                            <Binding Path="GridSize"/>
+                        </MultiBinding>
+                    </TranslateTransform.X>
+                    <TranslateTransform.Y>
+                        <MultiBinding Converter="{StaticResource offsetConverter}">
+                            <Binding Path="Game.Snake.Head.Position.Y"/>
+                            <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                            <Binding Path="GridSize"/>
+                        </MultiBinding>
+                    </TranslateTransform.Y>
+                </TranslateTransform>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+
+        <ItemsControl ItemsSource="{Binding Game.Snake.Body}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas></Canvas>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Rectangle Fill="DarkGreen">
+                        <Rectangle.Width>
+                            <MultiBinding Converter="{StaticResource dimensionConverter}">
+                                <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                                <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                            </MultiBinding>
+                        </Rectangle.Width>
+                        <Rectangle.Height>
+                            <MultiBinding Converter="{StaticResource dimensionConverter}">
+                                <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                                <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                            </MultiBinding>
+                        </Rectangle.Height>
+
+                        <Rectangle.RenderTransform>
+                            <TranslateTransform>
+                                <TranslateTransform.X>
+                                    <MultiBinding Converter="{StaticResource offsetConverter}">
+                                        <Binding Path="Position.X"/>
+                                        <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                                        <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                    </MultiBinding>
+                                </TranslateTransform.X>
+                                <TranslateTransform.Y>
+                                    <MultiBinding Converter="{StaticResource offsetConverter}">
+                                        <Binding Path="Position.Y"/>
+                                        <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                                        <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                    </MultiBinding>
+                                </TranslateTransform.Y>
+                            </TranslateTransform>
+                        </Rectangle.RenderTransform>
+                    </Rectangle>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Canvas>
 </UserControl>

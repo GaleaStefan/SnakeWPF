@@ -16,6 +16,6 @@ namespace Snake.Logic
             set { SetProperty(ref _pos, value); }
         }
 
-        public Cherry() { _pos = new(0, 0); }
+        public Cherry() { _pos = new(); }
     }
 }

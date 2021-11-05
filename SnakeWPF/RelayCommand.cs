@@ -44,10 +44,7 @@ namespace SnakeWPF
 
         void ICommand.Execute(object parameter)
         {
-            if (_TargetExecuteMethod != null)
-            {
-                _TargetExecuteMethod();
-            }
+            _TargetExecuteMethod?.Invoke();
         }
         #endregion
     }
@@ -94,10 +91,7 @@ namespace SnakeWPF
 
         void ICommand.Execute(object parameter)
         {
-            if (_TargetExecuteMethod != null)
-            {
-                _TargetExecuteMethod((T)parameter);
-            }
+            _TargetExecuteMethod?.Invoke((T)parameter);
         }
         #endregion
     }

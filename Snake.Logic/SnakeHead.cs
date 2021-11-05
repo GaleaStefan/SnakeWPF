@@ -18,7 +18,7 @@ namespace Snake.Logic
 
         public SnakeHead()
         {
-            _pos = new(0, 0);
+            _pos = new();
         }
     }
 }

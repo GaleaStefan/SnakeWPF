@@ -7,7 +7,7 @@ namespace SnakeWPF.SnakeGame
     public class SnakeGameViewModel : BindableBase
     {
         #region Events
-        public event Action<int> GameLostEvent = delegate { };
+        public event Action<int> GameEndEvent = delegate { };
         #endregion
 
         #region Commands
@@ -30,40 +30,60 @@ namespace SnakeWPF.SnakeGame
 
         public SnakeLogic Game
         {
-            get { return _game; }
-            set { SetProperty(ref _game, value); }
+            get => _game;
+            set => SetProperty(ref _game, value);
         }
 
         #endregion
 
         public SnakeGameViewModel()
         {
-            DirectionChangeCommand = new(OnDirectionChange);
+            DirectionChangeCommand = new(OnDirectionTryChange);
             ControlLoadedCommand = new(StartGame);
         }
 
         private void StartGame()
         {
             Game = new();
+            Game.GameLostEvent += OnGameLost;
+            Game.GridSize = GridSize;
+            Game.Initialize();
+
             _gameTimer = new();
             _gameTimer.Tick += new(OnGameTick);
-            _gameTimer.Interval = new(0, 0, 5);
+            _gameTimer.Interval = new(0, 0, 0, 0, 300);
             _gameTimer.Start();
         }
 
         public void StopGame()
         {
+            _gameTimer.Tick -= OnGameTick;
             _gameTimer.Stop();
         }
 
         private void OnGameTick(object sender, EventArgs args)
         {
-            
+            Game.Tick();
         }
 
-        private void OnDirectionChange(MoveDirection direction)
+        private void OnDirectionTryChange(MoveDirection direction)
         {
+            switch (Game.Snake.Direction)
+            {
+                case MoveDirection.UP when direction == MoveDirection.DOWN:
+                case MoveDirection.DOWN when direction == MoveDirection.UP:
+                case MoveDirection.LEFT when direction == MoveDirection.RIGHT:
+                case MoveDirection.RIGHT when direction == MoveDirection.LEFT:
+                    return;
+            }
 
+            Game.Snake.Direction = direction;
+        }
+
+        private void OnGameLost(int score)
+        {
+            StopGame();
+            GameEndEvent.Invoke(score);
         }
     }
 }

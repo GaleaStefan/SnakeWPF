@@ -23,7 +23,6 @@ namespace SnakeWPF.SnakeGame
             }
         }
 
-
         public SnakeStartViewModel()
         {
             StartCommand = new(OnStart);
@@ -31,8 +30,11 @@ namespace SnakeWPF.SnakeGame
             IncreaseGridCommand = new(IncreaseGrid, CanIncreaseGrid);
         }
 
-        private void OnStart() 
-            => StartKeyPressed.Invoke(GridSize);
+        private void OnStart()
+        {
+            StartKeyPressed.Invoke(GridSize);
+        }
+
         private bool CanDecreaseGrid() 
             => _gridSize > 10;
         private void DecreaseGrid() 

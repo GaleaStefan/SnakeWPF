@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace SnakeWPF.Converters
@@ -12,6 +13,9 @@ namespace SnakeWPF.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            if (values.Any(x => x == DependencyProperty.UnsetValue))
+                return DependencyProperty.UnsetValue;
+
             var gridPosition = System.Convert.ToDouble(values[0]);
             var screenDimension = (double)values[1];
             var gridSize = System.Convert.ToDouble(values[2]);

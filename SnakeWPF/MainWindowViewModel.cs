@@ -23,7 +23,7 @@ namespace SnakeWPF
             CurrentViewModel = _startViewModel;
 
             _startViewModel.StartKeyPressed += OnGameStart;
-            _gameViewModel.GameLostEvent += OnGameLost;
+            _gameViewModel.GameEndEvent += OnGameEnd;
             _endViewModel.RestartRequestEvent += OnGameRestart;
         }
 
@@ -36,7 +36,7 @@ namespace SnakeWPF
         private void OnGameRestart() 
             => CurrentViewModel = _startViewModel;
 
-        private void OnGameLost(int score) 
+        private void OnGameEnd(int score) 
             => CurrentViewModel = _endViewModel;
     }
 }

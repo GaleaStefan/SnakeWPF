@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:SnakeWPF"
         xmlns:snake="clr-namespace:SnakeWPF.SnakeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="400" Width="400">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <DataTemplate DataType="{x:Type snake:SnakeGameViewModel}">
             <snake:SnakeGameView/>
@@ -18,9 +21,7 @@
             <snake:SnakeEndView/>
         </DataTemplate>
     </Window.Resources>
-    <Window.DataContext>
-        <local:MainWindowViewModel/>
-    </Window.DataContext>
+    
     <Grid>
         <ContentControl Content="{Binding CurrentViewModel}"/>
     </Grid>

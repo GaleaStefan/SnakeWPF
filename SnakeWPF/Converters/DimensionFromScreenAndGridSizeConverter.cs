@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace SnakeWPF.Converters
@@ -12,7 +13,9 @@ namespace SnakeWPF.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            return System.Convert.ToDouble(values[0]) / System.Convert.ToDouble((int)values[1]);
+            return values.Any(x => x == DependencyProperty.UnsetValue)
+                ? DependencyProperty.UnsetValue
+                : System.Convert.ToDouble(values[0]) / System.Convert.ToDouble((int)values[1]);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

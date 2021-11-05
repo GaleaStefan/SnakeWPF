@@ -9,7 +9,18 @@ namespace Snake.Logic
 {
     public class Snake : BindableBase
     {
+        private static readonly Point2D[] directionOffset = new Point2D[5]
+        {
+            new(0, 0),
+            new(0, -1),
+            new(0, 1),
+            new(-1, 0),
+            new(1, 0)
+        };
+
         private MoveDirection _direction;
+
+        public bool PendingBodyPart { get; set; }
 
         public MoveDirection Direction
         {
@@ -41,5 +52,23 @@ namespace Snake.Logic
             Body = new();
         }
 
+        public void Move()
+        {
+            Point2D nextPos = Head.Position;
+            Head.Position += directionOffset[(int)Direction];
+
+            foreach (var bodyPart in Body)
+            {
+                Point2D currentPos = bodyPart.Position;
+                bodyPart.Position = nextPos;
+                nextPos = currentPos;
+            }
+
+            if(PendingBodyPart)
+            {
+                Body.Add(new(nextPos));
+                PendingBodyPart = false;
+            }
+        }
     }
 }

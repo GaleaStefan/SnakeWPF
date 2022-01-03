@@ -7,38 +7,38 @@ namespace Snake.Logic
     {
         public event Action<int> GameLostEvent = delegate { };
 
-        private int _score;
+        private int score;
 
         public int Score
         {
-            get { return _score; }
-            set { SetProperty(ref _score, value); }
+            get => score;
+            set => SetProperty(ref score, value);
         }
 
-        private Cherry _cherry;
+        private Cherry cherry;
 
         public Cherry Cherry
         {
-            get { return _cherry; }
-            set { SetProperty(ref _cherry, value); }
+            get => cherry;
+            set => SetProperty(ref cherry, value);
         }
 
-        private Snake _snake;
+        private Snake snake;
 
         public Snake Snake
         {
-            get { return _snake; }
-            set { SetProperty(ref _snake, value); }
+            get => snake;
+            set => SetProperty(ref snake, value);
         }
 
         public int GridSize { get; set; }
 
-        private bool _isRunning;
+        private bool isRunning;
 
         public bool GameIsRunning
         {
-            get => _isRunning;
-            set => SetProperty(ref _isRunning, value);
+            get => isRunning;
+            set => SetProperty(ref isRunning, value);
         }
 
         public SnakeGame()
@@ -50,7 +50,7 @@ namespace Snake.Logic
 
         public void Tick()
         {
-            if (Snake.Direction == MoveDirection.NONE)
+            if (Snake.Direction == MoveDirection.NONE || GameIsRunning == false)
                 return;
 
             if (SnakeHeadOnCherry())

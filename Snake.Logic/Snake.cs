@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace Snake.Logic
 {
@@ -18,31 +13,30 @@ namespace Snake.Logic
             new(1, 0)
         };
 
-        private MoveDirection _direction;
+        private MoveDirection direction;
 
         public bool PendingBodyPart { get; set; }
 
         public MoveDirection Direction
         {
-            get { return _direction; }
-            set { SetProperty(ref _direction, value); }
+            get => direction;
+            set => SetProperty(ref direction, value);
         }
 
-
-        private SnakeHead _head;
+        private SnakeHead head;
 
         public SnakeHead Head
         {
-            get { return _head; }
-            set { SetProperty(ref _head, value); }
+            get => head;
+            set => SetProperty(ref head, value);
         }
 
-        private ObservableCollection<SnakeBodyPart> _body;
+        private ObservableCollection<SnakeBodyPart> body;
 
         public ObservableCollection<SnakeBodyPart> Body
         {
-            get { return _body; }
-            set { SetProperty(ref _body, value); }
+            get => body;
+            set => SetProperty(ref body, value);
         }
 
         public Snake()
@@ -64,7 +58,7 @@ namespace Snake.Logic
                 nextPos = currentPos;
             }
 
-            if(PendingBodyPart)
+            if (PendingBodyPart)
             {
                 Body.Add(new(nextPos));
                 PendingBodyPart = false;

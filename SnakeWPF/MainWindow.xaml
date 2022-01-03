@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:SnakeWPF"
         xmlns:snake="clr-namespace:SnakeWPF.SnakeGame"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="400">
-    <Window.DataContext>
+        Title="Snake" Height="400" Width="400">
+    <!--<Window.DataContext>
         <local:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
     <Window.Resources>
         <DataTemplate DataType="{x:Type snake:SnakeGameViewModel}">
             <snake:SnakeGameView/>

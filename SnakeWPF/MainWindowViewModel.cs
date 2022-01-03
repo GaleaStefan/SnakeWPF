@@ -1,42 +1,50 @@
 ﻿using Snake.Logic;
+using SnakeWPF.Database;
 using SnakeWPF.SnakeGame;
 
 namespace SnakeWPF
 {
     public class MainWindowViewModel : BindableBase
     {
-        private readonly SnakeGameViewModel _gameViewModel = new();
-        private readonly SnakeStartViewModel _startViewModel = new();
-        private readonly SnakeEndViewModel _endViewModel = new();
+        private readonly SnakeGameViewModel gameViewModel = new();
+        private readonly SnakeStartViewModel startViewModel = new();
+        private readonly SnakeEndViewModel endViewModel = new();
+        private readonly UserRepository userRepo;
+        private User user = null;
 
-        private BindableBase _currentVm;
+        private BindableBase currentVm;
 
         public BindableBase CurrentViewModel
         {
-            get => _currentVm;
-            set 
-                => SetProperty(ref _currentVm, value);
+            get => currentVm;
+            set => SetProperty(ref currentVm, value);
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(AppDbContext dbContext)
         {
-            CurrentViewModel = _startViewModel;
+            userRepo = new(dbContext);
+            CurrentViewModel = startViewModel;
 
-            _startViewModel.StartKeyPressed += OnGameStart;
-            _gameViewModel.GameEndEvent += OnGameEnd;
-            _endViewModel.RestartRequestEvent += OnGameRestart;
+            startViewModel.StartKeyPressed += OnGameStart;
+            gameViewModel.GameEndEvent += OnGameEnd;
+            endViewModel.RestartRequestEvent += OnGameRestart;
         }
 
-        private void OnGameStart(int grid)
+        private void OnGameStart(int grid, string userName)
         {
-            _gameViewModel.GridSize = grid;
-            CurrentViewModel = _gameViewModel;
+            user = userRepo.GetByName(userName);
+
+            if (user is null)
+                user = userRepo.Insert(userName);
+
+            gameViewModel.GridSize = grid;
+            CurrentViewModel = gameViewModel;
         }
 
-        private void OnGameRestart() 
-            => CurrentViewModel = _startViewModel;
+        private void OnGameRestart()
+            => CurrentViewModel = startViewModel;
 
-        private void OnGameEnd(int score) 
-            => CurrentViewModel = _endViewModel;
+        private void OnGameEnd(int score)
+            => CurrentViewModel = endViewModel;
     }
 }

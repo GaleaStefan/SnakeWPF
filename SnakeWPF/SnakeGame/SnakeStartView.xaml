@@ -11,15 +11,20 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" TextAlignment="Center"><Run Text="Snake Game made with WPF MVVM"/></TextBlock>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+        <TextBlock Grid.Row="0" TextAlignment="Center" Margin="0,0,0,26"><Run Text="Snake Game made with WPF MVVM"/></TextBlock>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,22">
             <TextBlock TextAlignment="Center" VerticalAlignment="Center" Margin="5">Choose grid size</TextBlock>
             <Button Command="{Binding DecreaseGridCommand}">&lt;</Button>
             <TextBlock TextAlignment="Center" Margin="5" Text="{Binding GridSize, Mode=OneWay}"/>
             <Button Command="{Binding IncreaseGridCommand}">></Button>
         </StackPanel>
-        <Button Command="{Binding StartCommand}" Grid.Row="2" Margin="30,30,30,30" Content="Start" Grid.ColumnSpan="3"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Label Content="User" Height="Auto"/>
+            <TextBox Text="{Binding UserName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="120" Height="Auto"/>
+        </StackPanel>
+        <Button Command="{Binding StartCommand}" Grid.Row="3" Margin="30,8,30,30" Content="Start"/>
     </Grid>
 </UserControl>

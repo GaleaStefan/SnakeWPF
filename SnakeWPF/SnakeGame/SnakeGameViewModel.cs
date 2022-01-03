@@ -15,15 +15,15 @@ namespace SnakeWPF.SnakeGame
         public RelayCommand ControlLoadedCommand { get; set; }
         #endregion
 
-        private DispatcherTimer _gameTimer;
+        private DispatcherTimer gameTimer;
 
         #region Properties
         private int _gridSize;
 
         public int GridSize
         {
-            get { return _gridSize; }
-            set { SetProperty(ref _gridSize, value); }
+            get => _gridSize;
+            set => SetProperty(ref _gridSize, value);
         }
 
         private SnakeLogic _game;
@@ -49,16 +49,16 @@ namespace SnakeWPF.SnakeGame
             Game.GridSize = GridSize;
             Game.Initialize();
 
-            _gameTimer = new();
-            _gameTimer.Tick += new(OnGameTick);
-            _gameTimer.Interval = new(0, 0, 0, 0, 300);
-            _gameTimer.Start();
+            gameTimer = new();
+            gameTimer.Tick += new(OnGameTick);
+            gameTimer.Interval = new(0, 0, 0, 0, 300);
+            gameTimer.Start();
         }
 
         public void StopGame()
         {
-            _gameTimer.Tick -= OnGameTick;
-            _gameTimer.Stop();
+            gameTimer.Tick -= OnGameTick;
+            gameTimer.Stop();
         }
 
         private void OnGameTick(object sender, EventArgs args)
@@ -75,6 +75,8 @@ namespace SnakeWPF.SnakeGame
                 case MoveDirection.LEFT when direction == MoveDirection.RIGHT:
                 case MoveDirection.RIGHT when direction == MoveDirection.LEFT:
                     return;
+                default:
+                    break;
             }
 
             Game.Snake.Direction = direction;

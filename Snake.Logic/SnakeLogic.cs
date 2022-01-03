@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snake.Logic
 {
@@ -36,12 +33,12 @@ namespace Snake.Logic
 
         public int GridSize { get; set; }
 
-        private bool _gameRunning;
+        private bool _isRunning;
 
         public bool GameIsRunning
         {
-            get => _gameRunning;
-            set => SetProperty(ref _gameRunning, value);
+            get => _isRunning;
+            set => SetProperty(ref _isRunning, value);
         }
 
         public SnakeLogic()

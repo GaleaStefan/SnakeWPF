@@ -15,7 +15,10 @@ namespace SnakeWPF.Database
 
         public IEnumerable<RoundHistory> GetHighScores(int count)
         {
-            return dbContext.RoundHistories.OrderBy(rH => rH.Score).Take(count).Include(rH => rH.User);
+            return dbContext.RoundHistories
+                .OrderByDescending(rH => rH.Score)
+                .Take(count)
+                .Include(rH => rH.User);
         }
 
         public void InsertRoundHistory(RoundHistory roundHistory)

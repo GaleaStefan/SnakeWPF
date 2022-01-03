@@ -26,9 +26,9 @@ namespace SnakeWPF.SnakeGame
             set => SetProperty(ref _gridSize, value);
         }
 
-        private SnakeLogic _game;
+        private Snake.Logic.SnakeGame _game;
 
-        public SnakeLogic Game
+        public Snake.Logic.SnakeGame Game
         {
             get => _game;
             set => SetProperty(ref _game, value);

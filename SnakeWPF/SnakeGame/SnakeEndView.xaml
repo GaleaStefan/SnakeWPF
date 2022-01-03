@@ -6,7 +6,12 @@
              xmlns:local="clr-namespace:SnakeWPF.SnakeGame"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock>Test</TextBlock>
-    </Grid>
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center" TextAlignment="Center">
+            Congratulations <Run Text="{Binding UserName}"/>! You earned <LineBreak/>
+            <Run Text="{Binding Score}"/> score points!
+        </TextBlock>
+        <Button Content="Restart" Width="Auto" Command="{Binding RestartCommand}"/>
+        
+    </StackPanel>
 </UserControl>

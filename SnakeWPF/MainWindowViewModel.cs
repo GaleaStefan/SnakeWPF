@@ -6,13 +6,15 @@ namespace SnakeWPF
 {
     public class MainWindowViewModel : BindableBase
     {
-        private readonly SnakeGameViewModel gameViewModel = new();
-        private readonly SnakeStartViewModel startViewModel = new();
-        private readonly SnakeEndViewModel endViewModel = new();
         private readonly UserRepository userRepo;
-        private User user = null;
+        private readonly RoundHistoryRepository roundHistoryRepo;
 
         private BindableBase currentVm;
+        private SnakeGameViewModel gameViewModel = new();
+        private SnakeStartViewModel startViewModel = new();
+        private SnakeEndViewModel endViewModel = new();
+
+        private User user;
 
         public BindableBase CurrentViewModel
         {
@@ -23,28 +25,46 @@ namespace SnakeWPF
         public MainWindowViewModel(AppDbContext dbContext)
         {
             userRepo = new(dbContext);
+            roundHistoryRepo = new(dbContext);
+
+            InitGame();
+        }
+
+        private void InitGame()
+        {
+            gameViewModel = new();
+            startViewModel = new();
+            endViewModel = new();
+            user = null;
+
             CurrentViewModel = startViewModel;
 
             startViewModel.StartKeyPressed += OnGameStart;
             gameViewModel.GameEndEvent += OnGameEnd;
-            endViewModel.RestartRequestEvent += OnGameRestart;
+            endViewModel.RestartRequestEvent += InitGame;
         }
 
         private void OnGameStart(int grid, string userName)
         {
-            user = userRepo.GetByName(userName);
-
-            if (user is null)
-                user = userRepo.Insert(userName);
+            user = userRepo.GetByName(userName) ?? userRepo.Insert(userName);
 
             gameViewModel.GridSize = grid;
             CurrentViewModel = gameViewModel;
         }
 
-        private void OnGameRestart()
-            => CurrentViewModel = startViewModel;
-
         private void OnGameEnd(int score)
-            => CurrentViewModel = endViewModel;
+        {
+            roundHistoryRepo.InsertRoundHistory(new()
+            {
+                User = user,
+                PlayDateTime = System.DateTime.Now,
+                Score = score
+            });
+
+            endViewModel.Score = score;
+            endViewModel.UserName = user.Name;
+            endViewModel.Highscores = new(roundHistoryRepo.GetHighScores(20));
+            CurrentViewModel = endViewModel;
+        }
     }
 }

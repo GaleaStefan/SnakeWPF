@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Snake.Logic
 {
-    public class SnakeLogic : BindableBase
+    public class SnakeGame : BindableBase
     {
         public event Action<int> GameLostEvent = delegate { };
 
@@ -41,7 +41,7 @@ namespace Snake.Logic
             set => SetProperty(ref _isRunning, value);
         }
 
-        public SnakeLogic()
+        public SnakeGame()
         {
             Cherry = new();
             Snake = new();

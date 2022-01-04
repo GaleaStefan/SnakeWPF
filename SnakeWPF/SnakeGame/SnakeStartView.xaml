@@ -99,13 +99,12 @@
 
         <Button Command="{Binding StartCommand}" 
                     Grid.Row="2" 
-                    Margin="30,8,30,30"
+                    Margin="10,10,10,10"
                     BorderThickness="4"
                     BorderBrush="#596045"
                     Background="#c4d0a3">
             <TextBlock Grid.Row="0" 
-                       TextAlignment="Center" 
-                       Margin="0,0,0,26" 
+                       TextAlignment="Center"
                        FontFamily="#Pixeboy" 
                        FontSize="40" 
                        FontWeight="Bold" 

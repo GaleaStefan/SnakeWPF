@@ -6,25 +6,111 @@
              xmlns:local="clr-namespace:SnakeWPF.SnakeGame"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Height="Auto" HorizontalAlignment="Center">
+    <Grid HorizontalAlignment="Stretch" Background="#8b966e">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" TextAlignment="Center">
-            Congratulations <Run Text="{Binding UserName}"/>! You earned <LineBreak/>
-            <Run Text="{Binding Score}"/> score points!
+        <TextBlock Grid.Row="0" 
+                   TextAlignment="Center" 
+                   VerticalAlignment="Center" 
+                   Margin="5"
+                   FontFamily="#Super Legend Boy"
+                   FontSize="30"
+                   Foreground="#fafed6">
+                        GAME OVER!
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="0"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="8"/>
+            </TextBlock.Effect>
         </TextBlock>
-        <Button Grid.Row="1" Content="Restart" Width="Auto" Command="{Binding RestartCommand}"/>
-        <TextBlock Grid.Row="2" TextAlignment="Center" Text="Highscores"/>
-        <ListView Grid.Row="3" ItemsSource="{Binding Highscores}" Width="Auto" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+        <TextBlock TextAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Margin="5"
+                               FontFamily="#Super Legend Boy"
+                               FontSize="14"
+                               Foreground="#fafed6"
+                               Grid.Row="1">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="1"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="2"/>
+            </TextBlock.Effect>
+                Congratulations '<Run Text="{Binding UserName}" FontSize="16" Foreground="#FF424638"/>' !<LineBreak/>
+                You earned '<Run Text="{Binding Score}" FontSize="16" Foreground="#FF424638"/>' score points!
+        </TextBlock>
+
+        <Button Command="{Binding RestartCommand}"
+                    Width="Auto"
+                    Grid.Row="2" 
+                    Margin="5"
+                    BorderThickness="2"
+                    BorderBrush="#596045"
+                    Background="#c4d0a3">
+            <TextBlock TextAlignment="Center"
+                       FontFamily="#Pixeboy" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#fafed6" 
+                       Text="RESTART GAME">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0"
+                    Color="#596045"
+                    Opacity="1"
+                    BlurRadius="8"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </Button>
+
+        <TextBlock TextAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Margin="0,30,0,0"
+                               FontFamily="#Super Legend Boy"
+                               FontSize="14"
+                               Foreground="#fafed6"
+                               Grid.Row="3">
+            <TextBlock.Effect>
+                <DropShadowEffect ShadowDepth="1"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="2"/>
+            </TextBlock.Effect>
+                Highscores
+        </TextBlock>
+
+        <ListView Grid.Row="4" 
+                  ItemsSource="{Binding Highscores}"
+                  Width="Auto" 
+                  Height="Auto" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  FontFamily="#Super Legend Boy"
+                  FontSize="12"
+                  Foreground="#fafed6"
+                  Background="#FF8F9779">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nickname" Width="Auto" DisplayMemberBinding="{Binding User.Name}"/>
                     <GridViewColumn Header="Score" Width="Auto" DisplayMemberBinding="{Binding Score}"/>
-                    <GridViewColumn Header="Date" Width="Auto" DisplayMemberBinding="{Binding PlayDateTime}"/>
+                    <GridViewColumn Header="Date" Width="Auto" DisplayMemberBinding="{Binding PlayDateTime, StringFormat={}{0:dd/MM/yyyy HH:mm}}"/>
+
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style TargetType="GridViewColumnHeader">
+                            <Setter Property="BorderThickness" Value="2"></Setter>
+                            <Setter Property="BorderBrush" Value="#596045"></Setter>
+                            <Setter Property="Height" Value="Auto"></Setter>
+                            <Setter Property="Background" Value="#FFAEBC8A"/>
+                            <Setter Property="FontFamily" Value="#Super Legend Boy"/>
+                            <Setter Property="TextBlock.Foreground" Value="#fafed6"/>
+                            <Setter Property="Width" Value="Auto"/>
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
                 </GridView>
             </ListView.View>
         </ListView>

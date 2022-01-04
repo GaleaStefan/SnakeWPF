@@ -60,14 +60,14 @@ namespace Snake.Logic
                 Snake.PendingBodyPart = true;
             }
 
-            Snake.Move();
-
             if (SnakeInCollisionWithItself() || SnakeOutOfBounds())
             {
                 GameIsRunning = false;
                 GameLostEvent.Invoke(Score);
                 return;
             }
+
+            Snake.Move();
         }
 
         public void Initialize()
@@ -119,8 +119,8 @@ namespace Snake.Logic
 
         private bool SnakeOutOfBounds()
         {
-            return Snake.Head.Position.X < 0 || Snake.Head.Position.X > GridSize ||
-                Snake.Head.Position.Y < 0 || Snake.Head.Position.Y > GridSize;
+            return Snake.Head.Position.X < 0 || Snake.Head.Position.X >= GridSize ||
+                Snake.Head.Position.Y < 0 || Snake.Head.Position.Y >= GridSize;
         }
 
         private bool SnakeInCollisionWithItself()

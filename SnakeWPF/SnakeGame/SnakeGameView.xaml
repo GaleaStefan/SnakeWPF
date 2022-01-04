@@ -31,121 +31,141 @@
         <KeyBinding Key="D" Command="{Binding DirectionChangeCommand}" CommandParameter="{x:Static snake:MoveDirection.RIGHT}"/>
     </UserControl.InputBindings>
 
-    <Canvas Background="WhiteSmoke" Name="GameBoard" Width="300" Height="300">
-       <Ellipse Fill="Red">
-            <Ellipse.Width>
-                <MultiBinding Converter="{StaticResource dimensionConverter}">
-                    <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                    <Binding Path="GridSize"/>
-                </MultiBinding>
-            </Ellipse.Width>
+    <Grid Background="#8b966e" SizeChanged="Grid_SizeChanged">
+        <Canvas Background="#fafed6" Name="GameBoard" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="30">
+            <Ellipse Fill="#f05656" Stroke="#d13838" StrokeThickness="2">
+                <Ellipse.Effect>
+                    <DropShadowEffect ShadowDepth="1"
+                                                Color="#ad2b2b"
+                                                Opacity="1"
+                                                BlurRadius="4"/>
+                </Ellipse.Effect>
+                <Ellipse.Width>
+                    <MultiBinding Converter="{StaticResource dimensionConverter}">
+                        <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                        <Binding Path="GridSize"/>
+                    </MultiBinding>
+                </Ellipse.Width>
             
-            <Ellipse.Height>
-                <MultiBinding Converter="{StaticResource dimensionConverter}">
-                    <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                    <Binding Path="GridSize"/>
-                </MultiBinding>
-            </Ellipse.Height>
+                <Ellipse.Height>
+                    <MultiBinding Converter="{StaticResource dimensionConverter}">
+                        <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                        <Binding Path="GridSize"/>
+                    </MultiBinding>
+                </Ellipse.Height>
             
-            <Ellipse.RenderTransform>
-                <TranslateTransform>
-                    <TranslateTransform.X>
-                        <MultiBinding Converter="{StaticResource offsetConverter}">
-                            <Binding Path="Game.Cherry.Position.X"/>
-                            <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                            <Binding Path="GridSize"/>
-                        </MultiBinding>
-                    </TranslateTransform.X>
-                    <TranslateTransform.Y>
-                        <MultiBinding Converter="{StaticResource offsetConverter}">
-                            <Binding Path="Game.Cherry.Position.Y"/>
-                            <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                            <Binding Path="GridSize"/>
-                        </MultiBinding>
-                    </TranslateTransform.Y>
-                </TranslateTransform>
-            </Ellipse.RenderTransform>
-        </Ellipse>
-
-        <Rectangle Fill="LightGreen">
-            <Rectangle.Width>
-                <MultiBinding Converter="{StaticResource dimensionConverter}">
-                    <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                    <Binding Path="GridSize"/>
-                </MultiBinding>
-            </Rectangle.Width>
-
-            <Rectangle.Height>
-                <MultiBinding Converter="{StaticResource dimensionConverter}">
-                    <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                    <Binding Path="GridSize"/>
-                </MultiBinding>
-            </Rectangle.Height>
-
-            <Rectangle.RenderTransform>
-                <TranslateTransform>
-                    <TranslateTransform.X>
-                        <MultiBinding Converter="{StaticResource offsetConverter}">
-                            <Binding Path="Game.Snake.Head.Position.X"/>
-                            <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                            <Binding Path="GridSize"/>
-                        </MultiBinding>
-                    </TranslateTransform.X>
-                    <TranslateTransform.Y>
-                        <MultiBinding Converter="{StaticResource offsetConverter}">
-                            <Binding Path="Game.Snake.Head.Position.Y"/>
-                            <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                            <Binding Path="GridSize"/>
-                        </MultiBinding>
-                    </TranslateTransform.Y>
-                </TranslateTransform>
-            </Rectangle.RenderTransform>
-        </Rectangle>
-
-        <ItemsControl ItemsSource="{Binding Game.Snake.Body}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas></Canvas>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Rectangle Fill="DarkGreen">
-                        <Rectangle.Width>
-                            <MultiBinding Converter="{StaticResource dimensionConverter}">
+                <Ellipse.RenderTransform>
+                    <TranslateTransform>
+                        <TranslateTransform.X>
+                            <MultiBinding Converter="{StaticResource offsetConverter}">
+                                <Binding Path="Game.Cherry.Position.X"/>
                                 <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                                <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                <Binding Path="GridSize"/>
                             </MultiBinding>
-                        </Rectangle.Width>
-                        <Rectangle.Height>
-                            <MultiBinding Converter="{StaticResource dimensionConverter}">
+                        </TranslateTransform.X>
+                        <TranslateTransform.Y>
+                            <MultiBinding Converter="{StaticResource offsetConverter}">
+                                <Binding Path="Game.Cherry.Position.Y"/>
                                 <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                                <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                <Binding Path="GridSize"/>
                             </MultiBinding>
-                        </Rectangle.Height>
+                        </TranslateTransform.Y>
+                    </TranslateTransform>
+                </Ellipse.RenderTransform>
+            </Ellipse>
 
-                        <Rectangle.RenderTransform>
-                            <TranslateTransform>
-                                <TranslateTransform.X>
-                                    <MultiBinding Converter="{StaticResource offsetConverter}">
-                                        <Binding Path="Position.X"/>
-                                        <Binding ElementName="GameBoard" Path="ActualWidth"/>
-                                        <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
-                                    </MultiBinding>
-                                </TranslateTransform.X>
-                                <TranslateTransform.Y>
-                                    <MultiBinding Converter="{StaticResource offsetConverter}">
-                                        <Binding Path="Position.Y"/>
-                                        <Binding ElementName="GameBoard" Path="ActualHeight"/>
-                                        <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
-                                    </MultiBinding>
-                                </TranslateTransform.Y>
-                            </TranslateTransform>
-                        </Rectangle.RenderTransform>
-                    </Rectangle>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </Canvas>
+            <Rectangle Fill="#c8cfa6" Stroke="#3c4333" StrokeThickness="3">
+                <Rectangle.Effect>
+                    <DropShadowEffect ShadowDepth="0"
+                                                Color="#FF3B3F36"
+                                                Opacity="1"
+                                                BlurRadius="4"/>
+                </Rectangle.Effect>
+                <Rectangle.Width>
+                    <MultiBinding Converter="{StaticResource dimensionConverter}">
+                        <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                        <Binding Path="GridSize"/>
+                    </MultiBinding>
+                </Rectangle.Width>
+
+                <Rectangle.Height>
+                    <MultiBinding Converter="{StaticResource dimensionConverter}">
+                        <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                        <Binding Path="GridSize"/>
+                    </MultiBinding>
+                </Rectangle.Height>
+
+                <Rectangle.RenderTransform>
+                    <TranslateTransform>
+                        <TranslateTransform.X>
+                            <MultiBinding Converter="{StaticResource offsetConverter}">
+                                <Binding Path="Game.Snake.Head.Position.X"/>
+                                <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                                <Binding Path="GridSize"/>
+                            </MultiBinding>
+                        </TranslateTransform.X>
+                        <TranslateTransform.Y>
+                            <MultiBinding Converter="{StaticResource offsetConverter}">
+                                <Binding Path="Game.Snake.Head.Position.Y"/>
+                                <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                                <Binding Path="GridSize"/>
+                            </MultiBinding>
+                        </TranslateTransform.Y>
+                    </TranslateTransform>
+                </Rectangle.RenderTransform>
+            </Rectangle>
+
+            <ItemsControl ItemsSource="{Binding Game.Snake.Body}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas></Canvas>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Rectangle Fill="#FF49543A" Stroke="#3c4333" StrokeThickness="3">
+                            <Rectangle.Effect>
+                                <DropShadowEffect ShadowDepth="0"
+                                                Color="#FF3B3F36"
+                                                Opacity="1"
+                                                BlurRadius="4"/>
+                            </Rectangle.Effect>
+                            <Rectangle.Width>
+                                <MultiBinding Converter="{StaticResource dimensionConverter}">
+                                    <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                                    <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                </MultiBinding>
+                            </Rectangle.Width>
+                            <Rectangle.Height>
+                                <MultiBinding Converter="{StaticResource dimensionConverter}">
+                                    <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                                    <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                </MultiBinding>
+                            </Rectangle.Height>
+
+                            <Rectangle.RenderTransform>
+                                <TranslateTransform>
+                                    <TranslateTransform.X>
+                                        <MultiBinding Converter="{StaticResource offsetConverter}">
+                                            <Binding Path="Position.X"/>
+                                            <Binding ElementName="GameBoard" Path="ActualWidth"/>
+                                            <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                        </MultiBinding>
+                                    </TranslateTransform.X>
+                                    <TranslateTransform.Y>
+                                        <MultiBinding Converter="{StaticResource offsetConverter}">
+                                            <Binding Path="Position.Y"/>
+                                            <Binding ElementName="GameBoard" Path="ActualHeight"/>
+                                            <Binding ElementName="GameWindow" Path="DataContext.GridSize"/>
+                                        </MultiBinding>
+                                    </TranslateTransform.Y>
+                                </TranslateTransform>
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Canvas>
+    </Grid>
 </UserControl>

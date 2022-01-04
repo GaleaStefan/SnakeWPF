@@ -50,7 +50,7 @@ namespace SnakeWPF.SnakeGame
         }
 
         private bool CanStart()
-            => UserName is not null && UserName.Length > 3 && UserName.All(c => char.IsLetterOrDigit(c));
+            => UserName is not null && UserName.Length >= 4 && UserName.Length <= 16 && UserName.All(c => char.IsLetterOrDigit(c));
 
         private bool CanDecreaseGrid()
             => gridSize > 10;

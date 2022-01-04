@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace SnakeWPF.SnakeGame
 {
@@ -10,6 +12,13 @@ namespace SnakeWPF.SnakeGame
         public SnakeGameView()
         {
             InitializeComponent();
+        }
+
+        private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double newGameBoardSize = Math.Min(e.NewSize.Width, e.NewSize.Height);
+            GameBoard.Width = newGameBoardSize;
+            GameBoard.Height = newGameBoardSize;
         }
     }
 }

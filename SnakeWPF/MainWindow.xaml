@@ -21,8 +21,8 @@
             <snake:SnakeEndView/>
         </DataTemplate>
     </Window.Resources>
-    
-    <Grid>
+
+    <Border BorderBrush="#596045" BorderThickness="6">
         <ContentControl Content="{Binding CurrentViewModel}"/>
-    </Grid>
+    </Border>
 </Window>

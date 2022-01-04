@@ -7,24 +7,119 @@
              d:DataContext="{d:DesignInstance Type=local:SnakeStartViewModel}" x:Class="SnakeWPF.SnakeGame.SnakeStartView"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" TextAlignment="Center" Margin="0,0,0,26"><Run Text="Snake Game made with WPF MVVM"/></TextBlock>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" Margin="0,0,0,22">
-            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Margin="5">Choose grid size</TextBlock>
-            <Button Command="{Binding DecreaseGridCommand}">&lt;</Button>
-            <TextBlock TextAlignment="Center" Margin="5" Text="{Binding GridSize, Mode=OneWay}"/>
-            <Button Command="{Binding IncreaseGridCommand}">></Button>
-        </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Label Content="User" Height="Auto"/>
-            <TextBox Text="{Binding UserName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" Width="120" Height="Auto"/>
-        </StackPanel>
-        <Button Command="{Binding StartCommand}" Grid.Row="3" Margin="30,8,30,30" Content="Start"/>
-    </Grid>
+    <Border BorderBrush="#596045" BorderThickness="6">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#8b966e">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" 
+                       TextAlignment="Center" 
+                       Margin="0,0,0,26" 
+                       FontFamily="#Pixeboy" 
+                       FontSize="50" 
+                       FontWeight="Bold" 
+                       Foreground="#fafed6" 
+                       Text="Snake">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="0"
+                    Color="#596045"
+                    Opacity="1"
+                    BlurRadius="8"/>
+                </TextBlock.Effect>
+            </TextBlock>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,22">
+                    <TextBlock TextAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Margin="5"
+                               FontFamily="#Super Legend Boy"
+                               Foreground="#fafed6">
+                        Grid Size
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="0"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Command="{Binding DecreaseGridCommand}" Background="Transparent" BorderThickness="0">
+                            <Image Source="/Icons/arrow.png" Width="16">
+                                <Image.RenderTransform>
+                                    <ScaleTransform ScaleX="-1" ScaleY="1" CenterX="8"/>
+                                </Image.RenderTransform>
+                            </Image>
+                        </Button>
+
+                        <TextBlock TextAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Margin="5"
+                               FontFamily="#Super Legend Boy"
+                               FontSize="14"
+                               Foreground="#fafed6"
+                               Text="{Binding GridSize, Mode=OneWay}">
+                            <TextBlock.Effect>
+                                <DropShadowEffect ShadowDepth="0"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="8"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+
+                        <Button Command="{Binding IncreaseGridCommand}" Background="Transparent" BorderThickness="0">
+                            <Image Source="/Icons/arrow.png" Width="16"/>
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10,0,0,0">
+                    <TextBlock TextAlignment="Center" 
+                               VerticalAlignment="Center" 
+                               Margin="5"
+                               FontFamily="#Super Legend Boy"
+                               FontSize="14"
+                               Foreground="#fafed6"
+                               Text="Nickname">
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="0"
+                                                Color="#596045"
+                                                Opacity="1"
+                                                BlurRadius="8"/>
+                        </TextBlock.Effect>
+                    </TextBlock>
+                    <TextBox Text="{Binding UserName, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" MinWidth="120" Height="Auto">
+                        <TextBox.ToolTip>[REQUIRED]4 characters, [a-zA-Z0-9]</TextBox.ToolTip>
+                    </TextBox>
+                </StackPanel>
+            </StackPanel>
+
+            <Button Command="{Binding StartCommand}" 
+                    Grid.Row="2" 
+                    Margin="30,8,30,30"
+                    BorderThickness="4"
+                    BorderBrush="#596045"
+                    Background="#c4d0a3">
+                <TextBlock Grid.Row="0" 
+                       TextAlignment="Center" 
+                       Margin="0,0,0,26" 
+                       FontFamily="#Pixeboy" 
+                       FontSize="40" 
+                       FontWeight="Bold" 
+                       Foreground="#fafed6" 
+                       Text="START GAME">
+                    <TextBlock.Effect>
+                        <DropShadowEffect ShadowDepth="0"
+                    Color="#596045"
+                    Opacity="1"
+                    BlurRadius="8"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </Button>
+        </Grid>
+    </Border>
 </UserControl>

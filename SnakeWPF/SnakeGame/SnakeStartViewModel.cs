@@ -13,7 +13,7 @@ namespace SnakeWPF.SnakeGame
         public RelayCommand IncreaseGridCommand { get; private init; }
 
         private string userName;
-        private int gridSize = 10;
+        private int gridSize = 12;
 
         public string UserName
         {
